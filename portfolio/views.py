@@ -1,9 +1,19 @@
-from django.shortcuts import redirect, render
-from .models import Contact
+from django.shortcuts import render
+from .models import Contact,Blog,Category
 from django.contrib import messages
-
 from django.http import HttpResponseRedirect
 from django.urls import reverse
+
+def blog_detail_view(request,id):
+    blog = Blog.objects.get(id=id)
+    context = {"blog":blog}
+    return render(request, 'publication.html',context)
+
+def blog_view(request):
+    blogs = Blog.objects.all()
+    categories = Category.objects.all()
+    context = {"blogs":blogs,"categories":categories}
+    return render(request, 'blog.html',context)
 
 def home_view(request):
     return render(request,'home.html')
